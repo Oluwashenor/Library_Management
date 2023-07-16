@@ -4,13 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Models\User;
+use App\Models\Lend;
+use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::all();
-        return view('books', compact('books'));
+
+        if (auth()->user()->role == 'admin') {
+            $books = Book::all();
+            $users = User::where('role', '!=', 'admin')->get();
+            return view('booksadmin', compact('books', 'users'));
+        } else {
+            $lends = Lend::where('lendee_id', Auth::user()->id)->get();
+            return view('books', compact('lends'));
+        }
     }
 
     public function create(Request  $request)
@@ -27,6 +37,7 @@ class BookController extends Controller
             'isbn' => $validatedData['isbn'],
             'copies' => $validatedData['copies']
         ]);
+        toast('Book Created Successfully', 'success');
         return redirect("/books");
     }
 }

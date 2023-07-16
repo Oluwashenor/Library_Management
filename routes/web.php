@@ -15,11 +15,15 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\BookRequestController;
+use App\Http\Controllers\LendController;
 
 
-Route::get('/', function () {
-    return view('welcome');
-})->middleware('auth');
+// Route::get('/', function () {
+//     return view('welcome');
+// })->middleware('auth');
+Route::get('/', [BookController::class, 'index'])->middleware('auth');
+
 
 //AUTH
 Route::post('/loginAction', [UsersController::class, 'login']);
@@ -38,11 +42,12 @@ Route::post('/updatePassword', [UsersController::class, 'updatePassword'])->name
 
 
 //Books
-Route::get('/books', [BookController::class, 'index']);
-Route::post('/createBook', [BookController::class, 'create']);
+Route::get('/books', [BookController::class, 'index'])->middleware('auth');
 
+// Route::get('/booksadmin', [BookController::class, 'indexAdmin'])->name('booksAdmin');;
+Route::post('/createBook', [BookController::class, 'create'])->middleware('auth');
 
+Route::get('/booksRequest', [BookRequestController::class, 'index'])->middleware('auth');
+Route::post('/requestBook', [BookRequestController::class, 'create'])->middleware('auth');
 
-Route::get('/admin', function () {
-    return view('admin');
-})->name('admin');
+Route::post('/lendBook', [LendController::class, 'create'])->middleware('auth');

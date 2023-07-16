@@ -14,9 +14,10 @@ class UsersController extends Controller
 {
     public function register(Request $request)
     {
-        $role = 'user';
+        $role = 'student';
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'person_id' => ['required', 'string', 'max:255', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -26,7 +27,7 @@ class UsersController extends Controller
             toast('E-Mail already exist', 'info');
             return redirect('/register');
         }
-        $emails_for_admins = array("adeshiname@gmail.com", "elfaithful@gmail.com");
+        $emails_for_admins = array("adeshiname@gmail.com");
         if (in_array($validatedData['email'], $emails_for_admins)) {
             $role = 'admin';
         }
@@ -35,6 +36,7 @@ class UsersController extends Controller
             'email' => $validatedData['email'],
             'password' => $validatedData['password'],
             'role' => $role,
+            'person_id' => $validatedData['person_id'],
             'token' => '',
         ]);
         $user->save();
@@ -52,9 +54,9 @@ class UsersController extends Controller
         $credentials = $request->only('email', 'password');
         if (auth()->attempt($credentials)) {
             if (auth()->user()->role == 'admin') {
-                return redirect('/admin');
+                return redirect('/booksadmin');
             } else {
-                return redirect('/home');
+                return redirect('/books');
             }
         }
         return back()->withErrors([
