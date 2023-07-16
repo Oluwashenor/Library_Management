@@ -16,19 +16,23 @@ $title = "Login";
             </div>
 
             <div class="signin-form">
-                <h2 class="form-title">Sign In</h2>
-                <form method="POST" action="/loginAction" class="register-form" id="login-form">
+                <h2 class="form-title">Reset your password</h2>
+                <form method="POST" action="/updatePassword" class="register-form" id="login-form">
                     @foreach ($errors->all() as $error)
                     <p class="alert alert-danger">{{ $error }}</p>
                     @endforeach
                     {{csrf_field()}}
                     <div class="form-group">
                         <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                        <input type="text" name="email" id="your_email" placeholder="Your Name" />
+                        <input type="text" name="email" hidden id="your_email" value="{{$email}}" />
                     </div>
                     <div class="form-group">
                         <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
                         <input type="password" name="password" id="your_pass" placeholder="Password" />
+                    </div>
+                    <div class="form-group">
+                        <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+                        <input type="password" name="password_confirmation" id="your_pass" placeholder="Password" />
                     </div>
                     <div class="form-group form-button">
                         <input type="submit" name="signin" id="signin" class="form-submit" value="Log in" />

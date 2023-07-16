@@ -1,0 +1,1 @@
+Hello, Please click here to reset your password <a href="{{$token}}">Click Here</a>

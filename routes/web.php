@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\BookController;
 
 
 Route::get('/', function () {
@@ -30,3 +31,18 @@ Route::get('/login', function () {
     return view('login');
 })->name('login');
 Route::post('/registerAction', [UsersController::class, 'register']);
+Route::get('/forgotpassword', [UsersController::class, 'forgotpassword']);
+Route::post('/forgot_password', [UsersController::class, 'forgot_password']);
+Route::get('/passwordReset/{token}', [UsersController::class, 'passwordReset'])->name('passwordReset');
+Route::post('/updatePassword', [UsersController::class, 'updatePassword'])->name('updatePassword');
+
+
+//Books
+Route::get('/books', [BookController::class, 'index']);
+Route::post('/createBook', [BookController::class, 'create']);
+
+
+
+Route::get('/admin', function () {
+    return view('admin');
+})->name('admin');
