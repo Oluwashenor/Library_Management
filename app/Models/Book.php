@@ -10,4 +10,9 @@ class Book extends Model
 
     protected $fillable = ['name', 'copies', 'author', 'isbn'];
     use HasFactory;
+
+    public function lends()
+    {
+        return $this->hasMany(Lend::class);
+    }
 }

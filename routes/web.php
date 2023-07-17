@@ -46,6 +46,7 @@ Route::get('/books', [BookController::class, 'index'])->middleware('auth');
 
 // Route::get('/booksadmin', [BookController::class, 'indexAdmin'])->name('booksAdmin');;
 Route::post('/createBook', [BookController::class, 'create'])->middleware('auth');
+Route::post('/editBook', [BookController::class, 'edit'])->middleware('auth');
 
 Route::get('/booksRequest', [BookRequestController::class, 'index'])->middleware('auth');
 Route::post('/requestBook', [BookRequestController::class, 'create'])->middleware('auth');

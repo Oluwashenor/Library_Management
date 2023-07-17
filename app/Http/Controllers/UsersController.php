@@ -53,11 +53,7 @@ class UsersController extends Controller
 
         $credentials = $request->only('email', 'password');
         if (auth()->attempt($credentials)) {
-            if (auth()->user()->role == 'admin') {
-                return redirect('/booksadmin');
-            } else {
-                return redirect('/books');
-            }
+            return redirect('/books');
         }
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',

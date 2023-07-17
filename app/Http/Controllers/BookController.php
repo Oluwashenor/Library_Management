@@ -40,4 +40,23 @@ class BookController extends Controller
         toast('Book Created Successfully', 'success');
         return redirect("/books");
     }
+
+    public function edit(Request  $request)
+    {
+        $validatedData = $request->validate([
+            'id' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
+            'author' => ['required', 'string', 'max:255'],
+            'isbn' => ['required', 'string', 'max:11'],
+            'copies' => ['required'],
+        ]);
+        $book = Book::find($validatedData['id']);
+        $book->name = $validatedData['name'];
+        $book->author = $validatedData['author'];
+        $book->isbn = $validatedData['isbn'];
+        $book->copies = $validatedData['copies'];
+        $book->save();
+        toast('Book Updated Successfully', 'success');
+        return redirect("/books");
+    }
 }

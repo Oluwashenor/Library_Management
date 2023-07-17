@@ -15,12 +15,14 @@
 
 
 <!-- Button trigger modal -->
-<div class="row" style="max-width: 200px;margin-top:1%;height:50px;margin-left:20px;">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addBookModal">
+<div class="row" style="display:flex;justify-content:space-between;margin-top:1%;height:50px;margin-left:20px;width:95%;">
+    <button style="width: 150px;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addBookModal">
         Add Books
     </button>
+    <button style="width: 150px;" type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#lendBookModal">
+        Lend Books
+    </button>
 </div>
-
 
 <!-- Modal -->
 <div class="modal fade" id="addBookModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -68,7 +70,8 @@
                 <th scope="col">Book</th>
                 <th scope="col">Author</th>
                 <th scope="col">ISBN</th>
-                <th scope="col">Copies Available</th>
+                <th scope="col">Total Copies</th>
+                <th scope="col">Copies Out</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
@@ -80,11 +83,48 @@
                 <td>{{$book->author}}</td>
                 <td>{{$book->isbn}}</td>
                 <td>{{$book->copies}}</td>
+                <td>{{$book->lends->count()}}</td>
                 <td>
-                    <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#lendBookModal">
-                        Lend
-                    </button>
-                    <button type="button" class="btn btn-outline-info">Edit</button>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#editBookModal{{$book->id}}" class="btn btn-outline-info">Edit</button>
+                    <div class="modal fade" id="editBookModal{{$book->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form method="POST" action="/editBook">
+                                    {{csrf_field()}}
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Edit {{$book->name}}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <input type="text" name="id" value="{{$book->id}}" hidden class="form-control" id="exampleFormControlInput1" placeholder="">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleFormControlInput1" class="form-label">Name</label>
+                                            <input type="text" name="name" value="{{$book->name}}" class="form-control" id="exampleFormControlInput1" placeholder="">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleFormControlInput1" class="form-label">Author</label>
+                                            <input type="text" name="author" value="{{$book->author}}" class="form-control" id="exampleFormControlInput1" placeholder="">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleFormControlInput1" class="form-label">ISBN</label>
+                                            <input type="text" name="isbn" value="{{$book->isbn}}" class="form-control" id="exampleFormControlInput1" placeholder="">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleFormControlInput1" class="form-label">Copies</label>
+                                            <input type="number" name="copies" value="{{$book->copies}}" class="form-control" id="exampleFormControlInput1" placeholder="">
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
             @endforeach

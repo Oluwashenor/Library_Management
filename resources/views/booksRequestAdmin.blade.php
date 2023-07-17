@@ -5,14 +5,14 @@ $title = "Book Requests";
 @extends('layout')
 
 <style>
-.books-div {
-    background-color: white !important;
-    padding: 5%;
-    max-width: 80%;
-    border-radius: 3%;
-    margin-left: 13%;
-    margin-top: 3%;
-}
+    .books-div {
+        background-color: white !important;
+        padding: 5%;
+        max-width: 80%;
+        border-radius: 3%;
+        margin-left: 13%;
+        margin-top: 3%;
+    }
 </style>
 
 
@@ -28,7 +28,7 @@ $title = "Book Requests";
                 <th scope="col">Book</th>
                 <th scope="col">Author</th>
                 <th scope="col">User</th>
-                <th scope="col">Actions</th>
+                <!-- <th scope="col">Actions</th> -->
             </tr>
         </thead>
         <tbody>
