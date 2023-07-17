@@ -41,6 +41,14 @@ class BookController extends Controller
         return redirect("/books");
     }
 
+    public function delete($id)
+    {
+        $book = Book::find($id);
+        $book->delete();
+        toast('Book Deleted Successfully', 'success');
+        return redirect('/');
+    }
+
     public function edit(Request  $request)
     {
         $validatedData = $request->validate([

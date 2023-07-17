@@ -38,11 +38,13 @@ Route::post('/registerAction', [UsersController::class, 'register']);
 Route::get('/forgotpassword', [UsersController::class, 'forgotpassword']);
 Route::post('/forgot_password', [UsersController::class, 'forgot_password']);
 Route::get('/passwordReset/{token}', [UsersController::class, 'passwordReset'])->name('passwordReset');
+
 Route::post('/updatePassword', [UsersController::class, 'updatePassword'])->name('updatePassword');
 
 
 //Books
 Route::get('/books', [BookController::class, 'index'])->middleware('auth');
+Route::post('/deleteBook/{id}', [BookController::class, 'delete'])->name('passwordReset');
 
 // Route::get('/booksadmin', [BookController::class, 'indexAdmin'])->name('booksAdmin');;
 Route::post('/createBook', [BookController::class, 'create'])->middleware('auth');
