@@ -108,10 +108,11 @@ $appName = "Library Management";
             </div>
         </nav>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight titleHeader">
-            {{$title ?? "Dashboard"}}
+            {{ ucfirst(auth()->user()->role) }} {{$title ?? "Dashboard"}}
         </h2>
     </div>
     @yield('content')
+
 
 </body>
 

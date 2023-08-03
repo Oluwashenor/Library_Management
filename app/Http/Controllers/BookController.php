@@ -12,7 +12,6 @@ class BookController extends Controller
 {
     public function index()
     {
-
         if (auth()->user()->role == 'admin') {
             $books = Book::all();
             $users = User::where('role', '!=', 'admin')->get();
@@ -49,7 +48,7 @@ class BookController extends Controller
         return redirect('/');
     }
 
-    public function edit(Request  $request)
+    public function edit(Request $request)
     {
         $validatedData = $request->validate([
             'id' => ['required', 'string', 'max:255'],
